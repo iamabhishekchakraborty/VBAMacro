@@ -13,7 +13,7 @@ Public WithEvents objInboxItems As Outlook.Items
 Attribute objInboxItems.VB_VarHelpID = -1
 
 Private Sub Application_Startup()
-    Set objInbox = Outlook.Application.Session.GetDefaultFolder(olFolderInbox).Folders("Beachbody Analytics")
+    Set objInbox = Outlook.Application.Session.GetDefaultFolder(olFolderInbox).Folders("Analytics")
     Set objInboxItems = objInbox.Items
 End Sub
 
@@ -32,7 +32,7 @@ Private Sub objInboxItems_ItemAdd(ByVal Item As Object)
        'If it is a specific new email
        'check the sender and subject
        'forward the email with original content to different email address
-       If (objMail.SendUsingAccount = "analytics@beachbody.com") And (objMail.Subject = "Daily BOD Streaming Detail") Then
+       If (objMail.SendUsingAccount = "analytics@analytics.com") And (objMail.Subject = "Streaming Detail") Then
             'Find email addresses in the body via Regular Expression
             'Set objRegExp = CreateObject("vbscript.RegExp")
             'With objRegExp
@@ -56,11 +56,11 @@ Private Sub objInboxItems_ItemAdd(ByVal Item As Object)
             Set objForward = objMail.Forward
             'Customize the forward subject, body and recipients
             With objForward
-                 .Subject = "Daily BOD Streaming Detail"
+            .Subject = "Forward - Streaming Detail"
                  .HTMLBody = objMail.HTMLBody
-                 .Recipients.Add ("abhishek.chakraborthy@cesltd.com")
+                 .Recipients.Add ("abhishek@analytics.com")
                  .Recipients.ResolveAll
-                 '.Importance = olImportanceHigh
+                 .Importance = olImportanceHigh
                  .Send
             End With
        End If
